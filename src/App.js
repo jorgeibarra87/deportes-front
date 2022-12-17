@@ -1,31 +1,43 @@
-//import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 import { Component } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MenuAdmin from "./components/MenuAdmin"
+import PageInicio from './components/PageInicio'
+import PageEventos from './components/PageEventos';
+import PageUsuarios from './components/PageUsuarios';
 
-function Saludar() {
-  return <div>
-    <h1>Hola mundo</h1>
-    <h2>Mi primer react</h2>
-    <table border={1}>
-      <tr>
-        <td>
-          inicio
-        </td>
-        <td>
-          Nombre
-        </td>
-      </tr>
-    </table>
 
-  </div>
-}
+import MenuInicial from './components/MenuInicial';
+import PageLogin from './components/PageLogin';
+import PageLogout from './components/PageEventos';
+
 
 class App extends Component {
+
   render() {
     return (
-      <>
-        {Saludar()}
-      </>
+      <Router>
+        <MenuInicial />
+        <Routes>
+          <Route path='/' element={<PageInicio />} />
+          <Route path='/PageLogin' element={<PageLogin />} />
+          <Route path='/PageEventos' element={<PageEventos />} />
+          
+        </Routes>
+      </Router>
+
+      /*<Router>
+        <MenuAdmin />
+        <Routes>
+          <Route path='/' element={<PageInicio />} />
+          <Route path='/PageUsuarios' element={<PageUsuarios />} />
+          <Route path='/PageEventos' element={<PageEventos />} />
+        </Routes>
+      </Router>*/
+
+
+
+
     );
   }
 }
