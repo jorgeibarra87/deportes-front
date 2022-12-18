@@ -181,192 +181,200 @@ class PageEventos extends Component {
 
         return (
             <div className="App">
-                <br />
-                <br />
-                <br />
-                <button className="btn btn-success" onClick={() => { this.setState({ form: null, tipoModal: 'insertar' }); this.modalInsertar() }}>Agregar Evento</button>
-                <br />
-                <br />
-                <table className="table ">
-                    <thead>
-                        <tr>
-                            <th>ID </th>
-                            <th>Deporte</th>
-                            <th>Usuario</th>
-                            <th>Fecha Evento</th>
-                            <th>Hora Evento</th>
-                            <th>Fecha Registro</th>
-                            <th>Hora Registro</th>
-                            <th>Equipo 1</th>
-                            <th>Equipo 2</th>
-                            <th>Marcador Equipo 1</th>
-                            <th>Marcador Equipo 2</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.data.map((evento) => {
-                            return (
+                    <div className="table_title"><h1>Eventos registrados</h1>
+                    </div>
+                    <br />
+                    <table className="table ">
+                        <div className="containertabla">
+                            <thead>
                                 <tr>
-                                    <td>{evento._id}</td>
-                                    <td>{evento.dep_id}</td>
-                                    <td>{evento.usu_id}</td>
-                                    <td>{evento.mar_fechaEvento}</td>
-                                    <td>{evento.mar_horaEvento}</td>
-                                    <td>{evento.mar_fechaRegistro}</td>
-                                    <td>{evento.mar_horaRegistro}</td>
-                                    <td>{evento.equi_id}</td>
-                                    <td>{evento.equi_id2}</td>
-                                    <td>{evento.mar_marcadoresqui1}</td>
-                                    <td>{evento.mar_marcadoresqui2}</td>
-                                    <td>
-                                        <button className="btn btn-primary">
-                                            <FontAwesomeIcon icon={faEdit} onClick={() => { this.seleccionarEvento(evento); this.modalInsertar() }} />
-                                        </button>
-                                        {"  "}
-                                        <button className="btn btn-danger">
-                                            <FontAwesomeIcon icon={faTrashAlt} hidden={!this.state.usuadmin} onClick={() => { this.seleccionarEvento(evento); this.modalEliminar() }} />
-                                        </button>
-                                    </td>
+                                    <th className="td">ID</th>
+                                    <th className="td">Deporte</th>
+                                    <th className="td">Usuario</th>
+                                    <th className="td">Fecha Evento</th>
+                                    <th className="td">Hora Evento</th>
+                                    <th className="td">Fecha Registro</th>
+                                    <th className="td">Hora Registro</th>
+                                    <th className="td">Equipo 1</th>
+                                    <th className="td">Equipo 2</th>
+                                    <th className="td">Marcador Equipo 1</th>
+                                    <th className="td">Marcador Equipo 2</th>
                                 </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-
-                <Modal isOpen={this.state.modalInsertar}>
-                    <ModalHeader style={{ display: 'block' }}>
-
-                    </ModalHeader>
-                    <ModalBody>
-                        <div>
-                            <input
-                                className="form-control"
-                                type="hidden"
-                                name="_id"
-                                id="_id"
-                                readOnly // Solo lectura
-                                onChange={this.handleChange}
-                                value={form ? form._id : this.state.data.length + 1}
-                            ></input>
-                            <label htmlFor="dep_id">Deporte</label>
-                            <select class="form-select" aria-label="Default select example" onChange={this.handleChange}>
-                                <option selected>seleccionar</option>
-                                {this.state.data2.map((Deportes) => {
+                            </thead>
+                            <tbody>
+                                {this.state.data.map((evento) => {
                                     return (
-                                        <option value={Deportes._id}>{Deportes.dep_nombre}</option>
+                                        <tr>
+                                            <td className="td">{evento._id}</td>
+                                            <td className="td">{evento.dep_id}</td>
+                                            <td className="td">{evento.usu_id}</td>
+                                            <td className="td">{evento.mar_fechaEvento}</td>
+                                            <td className="td">{evento.mar_horaEvento}</td>
+                                            <td className="td">{evento.mar_fechaRegistro}</td>
+                                            <td className="td">{evento.mar_horaRegistro}</td>
+                                            <td className="td">{evento.equi_id}</td>
+                                            <td className="td">{evento.equi_id2}</td>
+                                            <td className="td">{evento.mar_marcadoresqui1}</td>
+                                            <td className="td">{evento.mar_marcadoresqui2}</td>
+                                            <td>
+                                                <button className="btn btn-primary">
+                                                    <FontAwesomeIcon icon={faEdit} onClick={() => { this.seleccionarEvento(evento); this.modalInsertar() }} />
+                                                </button>
+                                                {"  "}
+                                                <button className="btn btn-danger">
+                                                    <FontAwesomeIcon icon={faTrashAlt} hidden={!this.state.usuadmin} onClick={() => { this.seleccionarEvento(evento); this.modalEliminar() }} />
+                                                </button>
+                                            </td>
+                                        </tr>
                                     );
-
                                 })}
-                            </select>
-                            <label htmlFor="usu_id">Usuario</label>
-                            <input
-                                className="form-control"
-                                type="text"
-                                name="usu_id"
-                                id="usu_id"
-                                onChange={this.handleChange}
-                                value={form ? form.usu_id : ''}
-                            ></input>
-                            <label htmlFor="mar_fechaEvento">Fecha Evento</label>
-                            <input
-                                className="form-control"
-                                type="date"
-                                name="mar_fechaEvento"
-                                id="mar_fechaEvento"
-                                onChange={this.handleChange}
-                                value={form ? form.mar_fechaEvento : ''}
-                            ></input>
-                            <label htmlFor="mar_horaEvento">Hora Evento</label>
-                            <input
-                                className="form-control"
-                                type="time"
-                                name="mar_horaEvento"
-                                id="mar_horaEvento"
-                                onChange={this.handleChange}
-                                value={form ? form.mar_horaEvento : ''}
-                            ></input>
-                            <label htmlFor="mar_fechaRegistro">Fecha Registro</label>
-                            <input
-                                className="form-control"
-                                type="text"
-                                name="mar_fechaRegistro"
-                                id="mar_fechaRegistro"
-                                onChange={this.handleChange}
-                                value={form ? form.mar_fechaRegistro : ''}
-                            ></input>
-                            <label htmlFor="mar_horaRegistro">Hora Registro</label>
-                            <input
-                                className="form-control"
-                                type="text"
-                                name="mar_horaRegistro"
-                                id="mar_horaRegistro"
-                                onChange={this.handleChange}
-                                value={form ? form.mar_horaRegistro : ''}
-                            ></input>
-                            <label htmlFor="equi_id">Equipo 1</label>
-                            <select class="form-select" aria-label="Default select example" onChange={this.handleChange}>
-                                <option selected>seleccionar</option>
-                                {this.state.data3.map((Equipos) => {
-                                    return (
-                                        <option value={Equipos._id}>{Equipos.equi_nombre}</option>
-                                    );
-
-                                })}
-                            </select>
-                            <label htmlFor="mar_marcadoresqui1">Marcador Equipo 1</label>
-                            <input
-                                className="form-control"
-                                type="text"
-                                name="mar_marcadoresqui1"
-                                id="mar_marcadoresqui1"
-                                onChange={this.handleChange}
-                                value={form ? form.mar_marcadoresqui1 : ''}
-                            ></input>
-                            <label htmlFor="equi_id2">Equipo 2</label>
-                            <select class="form-select" aria-label="Default select example" onChange={this.handleChange}>
-                                <option selected>seleccionar</option>
-                                {this.state.data3.map((Equipos) => {
-                                    return (
-                                        <option value={Equipos._id}>{Equipos.equi_nombre}</option>
-                                    );
-
-                                })}
-                            </select>
-                            <label htmlFor="mar_marcadoresqui2">Marcador Equipo 2</label>
-                            <input
-                                className="form-control"
-                                type="text"
-                                name="mar_marcadoresqui2"
-                                id="mar_marcadoresqui2"
-                                onChange={this.handleChange}
-                                value={form ? form.mar_marcadoresqui2 : ''}
-                            ></input>
-
-                            <br />
+                            </tbody>
                         </div>
-                    </ModalBody>
-                    <ModalFooter>
-                        {
-                            this.state.tipoModal === 'insertar' ?
-                                <button className="btn btn-success" onClick={() => this.peticionPost()}>Insertar</button>
-                                : <button className="btn btn-success" onClick={() => this.peticionPut()}>Modificar</button>
-                        }
-                        <button className="btn btn-danger" onClick={() => this.modalInsertar()}>Cancelar</button>
-                    </ModalFooter>
-                </Modal>
+                    </table>
+                <div className="button-item">
+                <button className="btn btn-success" hidden={!this.state.usuadmin} onClick={() => { this.setState({ form: null, tipoModal: 'insertar' }); this.modalInsertar() }}>Agregar Evento</button>
+                </div>
 
-                <Modal isOpen={this.state.modalEliminar}>
-                    <ModalBody>
-                        Estas segur@ que deseas eliminar?
-                    </ModalBody>
-                    <ModalFooter>
-                        <button className="btn btn-danger" onClick={() => this.peticionDelete()}>Si</button>
-                        <button className="btn btn-success" onClick={() => this.modalEliminar()}>No</button>
-                    </ModalFooter>
-                </Modal>
-            </div>
-        );
+                    <Modal isOpen={this.state.modalInsertar}>
+                        <ModalHeader style={{ display: 'block' }}>
+
+                        </ModalHeader>
+                        <ModalBody>
+                            <div>
+                                <input
+                                    className="form-control"
+                                    type="hidden"
+                                    name="_id"
+                                    id="_id"
+                                    readOnly // Solo lectura
+                                    onChange={this.handleChange}
+                                    value={form ? form._id : this.state.data.length + 1}
+                                ></input>
+
+                                <label htmlFor="dep_id">Deporte</label>
+                                <select class="form-select" aria-label="Default select example" onChange={this.handleChange}>
+                                    <option selected>seleccionar</option>
+                                    {this.state.data2.map((Deportes) => {
+                                        return (
+                                            <option value={Deportes._id}>{Deportes.dep_nombre}</option>
+                                        );
+
+                                    })}
+                                </select>
+                                <label htmlFor="usu_id">Usuario</label>
+                                <input
+                                    className="form-control"
+                                    type="text"
+                                    name="usu_id"
+                                    id="usu_id"
+                                    onChange={this.handleChange}
+                                    value={form ? form.usu_id : ''}
+                                ></input>
+                                <label htmlFor="mar_fechaEvento">Fecha Evento</label>
+                                <input
+                                    className="form-control"
+                                    type="date"
+                                    name="mar_fechaEvento"
+                                    id="mar_fechaEvento"
+                                    onChange={this.handleChange}
+                                    value={form ? form.mar_fechaEvento : ''}
+                                ></input>
+                                <label htmlFor="mar_horaEvento">Hora Evento</label>
+                                <input
+                                    className="form-control"
+                                    type="time"
+                                    name="mar_horaEvento"
+                                    id="mar_horaEvento"
+                                    onChange={this.handleChange}
+                                    value={form ? form.mar_horaEvento : ''}
+                                ></input>
+                                <label htmlFor="mar_fechaRegistro">Fecha Registro</label>
+                                <input
+                                    className="form-control"
+                                    type="date"
+                                    name="mar_fechaRegistro"
+                                    id="mar_fechaRegistro"
+                                    onChange={this.handleChange}
+                                    value={form ? form.mar_fechaRegistro : ''}
+                                ></input>
+
+                                <label htmlFor="mar_horaRegistro">Hora Registro</label>
+                                <input
+                                    className="form-control"
+                                    type="time"
+                                    name="mar_horaRegistro"
+                                    id="mar_horaRegistro"
+                                    onChange={this.handleChange}
+                                    value={form ? form.mar_horaRegistro : ''}
+                                ></input>
+
+                                <label htmlFor="equi_id">Equipo 1</label>
+                                <select class="form-select" aria-label="Default select example" onChange={this.handleChange}>
+                                    <option selected>seleccionar</option>
+                                    {this.state.data3.map((Equipos) => {
+                                        return (
+                                            <option value={Equipos._id}>{Equipos.equi_nombre}</option>
+
+                                        );
+
+                                    })}
+                                </select>
+
+                                <label htmlFor="mar_marcadoresqui1">Marcador Equipo 1</label>
+                                <input
+                                    className="form-control"
+                                    type="text"
+                                    name="mar_marcadoresqui1"
+                                    id="mar_marcadoresqui1"
+                                    onChange={this.handleChange}
+                                    value={form ? form.mar_marcadoresqui1 : ''}
+                                ></input>
+
+                                <label htmlFor="equi_id2">Equipo 2</label>
+                                <select class="form-select" aria-label="Default select example" onChange={this.handleChange}>
+                                    <option selected>seleccionar</option>
+                                    {this.state.data3.map((Equipos) => {
+                                        return (
+                                            <option value={Equipos._id}>{Equipos.equi_nombre}</option>
+                                        );
+                                    })}
+                                </select>
+
+                                <label htmlFor="mar_marcadoresqui2">Marcador Equipo 2</label>
+                                <input
+                                    className="form-control"
+                                    type="text"
+                                    name="mar_marcadoresqui2"
+                                    id="mar_marcadoresqui2"
+                                    onChange={this.handleChange}
+                                    value={form ? form.mar_marcadoresqui2 : ''}
+                                ></input>
+
+                                <br />
+                            </div>
+                        </ModalBody>
+                        <ModalFooter>
+                            {
+                                this.state.tipoModal === 'insertar' ?
+                                    <button className="btn btn-success" onClick={() => this.peticionPost()}>Insertar</button>
+                                    : <button className="btn btn-success" onClick={() => this.peticionPut()}>Modificar</button>
+                            }
+                            <button className="btn btn-danger" onClick={() => this.modalInsertar()}>Cancelar</button>
+                        </ModalFooter>
+                    </Modal>
+
+                    <Modal isOpen={this.state.modalEliminar}>
+                        <ModalBody>
+                            Estas segur@ que deseas eliminar?
+                        </ModalBody>
+                        <ModalFooter>
+                            <button className="btn btn-danger" onClick={() => this.peticionDelete()}>Si</button>
+                            <button className="btn btn-success" onClick={() => this.modalEliminar()}>No</button>
+                        </ModalFooter>
+                    </Modal>
+                </div>
+                );
     }
 }
 
-export default PageEventos;
+                export default PageEventos;

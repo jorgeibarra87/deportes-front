@@ -1,63 +1,68 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css"
 
-import axios from "axios";//
-import "bootstrap/dist/css/bootstrap.min.css";//
-
-
-const urlEventos = 'http://localhost:9000/api/eventos/5'
+const url = "http://localhost:5000/marcadores";
 
 class PageInicio extends Component {
 
-  state = {
-    data: []
-  }
+    state = {
+        data: [],
+    };
 
+    peticionGet = () => {
+        axios.get(url).then((response) => {
+            //console.log(response.data);
+            this.setState({ data: response.data });
+        })
+            .catch(error => {
+                console.log(error.message)
+            })
+    };
 
-  peticionGet = () => {
-    axios.get(urlEventos).then(response => {
-      //console.log(response.data);
-      this.setState({ data: response.data })
-    }).catch(error => {
-      console.log(error.message);
-    })
-  }
+    componentDidMount() {
+        this.peticionGet();
+    }
 
-  componentDidMount() {
-    this.peticionGet()
-  }
+    render() {
 
+//        const form = this.state.form
 
-  render() {
-    return <div>
-      <table className="table ">
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Equipo1</th>
-            <th>Equipo2</th>
-            <th>Deporte</th>
-            <th>Descripción</th>
-
-
-          </tr>
-        </thead>
-        <tbody>
-          {this.state.data.map(evento => {
-            return (
-              <tr key={evento.sec}>
-                <td>{evento.fecha}</td>
-                <td>{evento.equi1 + ": " + evento.marca1}</td>
-                <td>{evento.equi2 + ": " + evento.marca2}</td>
-                <td>{evento.deporte}</td>
-                <td>{evento.descrip}</td>
-
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    </div>
-  }
+        return (
+            <div className="App">
+                <div className="table_title"><h1>Eventos recientes</h1></div>
+                <br />
+                <table className="table ">
+                <div className="containertabla">
+                    <thead>
+                        <tr>
+                            <th className="td">Deporte</th>
+                            <th className="td">Equipo 1</th>
+                            <th className="td">Marcador Equipo 1</th>
+                            <th className="td">Equipo 2</th>  
+                            <th className="td">Marcador Equipo 2</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.data.map((evento) => {
+                            return (
+                                <tr>
+                                    <td className="td">{evento.dep_id}</td>
+                                    <td className="td">{evento.equi_id}</td>
+                                    <td className="td">{evento.mar_marcadoresqui1}</td>
+                                    <td className="td">{evento.equi_id2}</td>
+                                    <td className="td">{evento.mar_marcadoresqui2}</td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                    </div>
+                </table>
+            </div>
+        );
+    }
 }
 
-export default PageInicio
+export default PageInicio;

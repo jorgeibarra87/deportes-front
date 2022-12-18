@@ -5,9 +5,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
-const url = "http://localhost:5000/usuarios";
+const url = "http://localhost:5000/equipos";
 
-class PageUsuarios extends Component {
+class PageEquipos extends Component {
 
     state = {
         data: [],
@@ -16,11 +16,7 @@ class PageUsuarios extends Component {
         tipoModal: '',
         form: {
             _id: '',
-            usu_id:'',
-            usu_email: '',
-            usu_clave: '',
-            usu_nombres: '',
-            usu_apellidos: ''
+            equi_nombre: ''
         }
     };
 
@@ -58,7 +54,7 @@ class PageUsuarios extends Component {
     }
 
     peticionDelete = () => {
-        console.log(url + '/'  + this.state.form._id)
+        console.log(url + '/' + this.state.form._id)
         axios.delete(url + '/' + this.state.form._id, this.state.form)
             .then((response) => {
                 this.modalEliminar() //cerramos la modal form
@@ -69,16 +65,12 @@ class PageUsuarios extends Component {
             })
     }
 
-    seleccionarUsuario = (usuario) => {
+    seleccionarEquipo = (equipo) => {
         this.setState({
             tipoModal: 'actualizar',
             form: {
-                _id: usuario._id,
-                usu_id:usuario.usu_id,
-                usu_email: usuario.usu_email,
-                usu_clave: usuario.usu_clave,
-                usu_nombres: usuario.usu_nombres,
-                usu_apellidos: usuario.usu_apellidos
+                _id: equipo._id,
+                equi_nombre: equipo.equi_nombre
             }
         })
     }
@@ -112,38 +104,30 @@ class PageUsuarios extends Component {
 
         return (
             <div className="App">
-                <div className="table_title"><h1>Usuarios Registrados</h1></div>
+                <div className="table_title"><h1>Equipos registrados</h1></div>
                 <br />
                 <table className="table ">
                 <div className="containertabla">
                     <thead>
                         <tr>
                             <th className="td">ID</th>
-                            <th className="td">Id</th>
-                            <th className="td">Email</th>
-                            <th className="td">Clave</th>
                             <th className="td">Nombre</th>
-                            <th className="td">Apellido</th>
                             <th className="td">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.data.map((usuario) => {
+                        {this.state.data.map((equipo) => {
                             return (
                                 <tr>
-                                    <td className="td">{usuario._id}</td>
-                                    <td className="td">{usuario.usu_id}</td>
-                                    <td className="td">{usuario.usu_email}</td>
-                                    <td className="td">{usuario.usu_clave}</td>
-                                    <td className="td">{usuario.usu_nombres}</td>
-                                    <td className="td">{usuario.usu_apellidos}</td>
+                                    <td className="td">{equipo._id}</td>
+                                    <td className="td">{equipo.equi_nombre}</td>
                                     <td>
                                         <button className="btn btn-primary">
-                                            <FontAwesomeIcon icon={faEdit} onClick={() => { this.seleccionarUsuario(usuario); this.modalInsertar() }} />
+                                            <FontAwesomeIcon icon={faEdit} onClick={() => { this.seleccionarEquipo(equipo); this.modalInsertar() }} />
                                         </button>
                                         {"  "}
                                         <button className="btn btn-danger">
-                                            <FontAwesomeIcon icon={faTrashAlt} onClick={() => { this.seleccionarUsuario(usuario); this.modalEliminar() }} />
+                                            <FontAwesomeIcon icon={faTrashAlt} onClick={() => { this.seleccionarEquipo(equipo); this.modalEliminar() }} />
                                         </button>
                                     </td>
                                 </tr>
@@ -153,7 +137,7 @@ class PageUsuarios extends Component {
                     </div>
                 </table>
                 <div className="button-item">
-                <button className="btn btn-success" onClick={() => { this.setState({ form: null, tipoModal: 'insertar' }); this.modalInsertar() }}>Agregar Usuario</button>
+                <button className="btn btn-success" onClick={() => { this.setState({ form: null, tipoModal: 'insertar' }); this.modalInsertar() }}>Agregar Equipo</button>
                 </div>
 
                 <Modal isOpen={this.state.modalInsertar}>
@@ -171,53 +155,14 @@ class PageUsuarios extends Component {
                                 onChange={this.handleChange}
                                 value={form ? form._id : this.state.data.length + 1}
                             ></input>
+                            <label htmlFor="equi_nombre">Nombres</label>
                             <input
                                 className="form-control"
                                 type="text"
-                                name="usu_id"
-                                id="usu_id"
+                                name="equi_nombre"
+                                id="equi_nombre"
                                 onChange={this.handleChange}
-                                value={form ? form.usu_id : this.state.data.length + 1}
-                            ></input>
-                            <br />
-                            <label htmlFor="usu_email">Email</label>
-                            <input
-                                className="form-control"
-                                type="text"
-                                name="usu_email"
-                                id="usu_email"
-                                onChange={this.handleChange}
-                                value={form ? form.usu_email : ''}
-                            ></input>
-                            <br />
-                            <label htmlFor="usu_clave">Clave</label>
-                            <input
-                                className="form-control"
-                                type="text"
-                                name="usu_clave"
-                                id="usu_clave"
-                                onChange={this.handleChange}
-                                value={form ? form.usu_clave : ''}
-                            ></input>
-                            <br />
-                            <label htmlFor="usu_nombres">Nombres</label>
-                            <input
-                                className="form-control"
-                                type="text"
-                                name="usu_nombres"
-                                id="usu_nombres"
-                                onChange={this.handleChange}
-                                value={form ? form.usu_nombres : ''}
-                            ></input>
-                            <br />
-                            <label htmlFor="usu_apellidos">Apellidos</label>
-                            <input
-                                className="form-control"
-                                type="text"
-                                name="usu_apellidos"
-                                id="usu_apellidos"
-                                onChange={this.handleChange}
-                                value={form ? form.usu_apellidos : ''}
+                                value={form ? form.equi_nombre: ''}
                             ></input>
                             <br />
                         </div>
@@ -246,4 +191,4 @@ class PageUsuarios extends Component {
     }
 }
 
-export default PageUsuarios;
+export default PageEquipos;
